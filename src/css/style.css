@@ -1,12 +1,12 @@
-#mydiv, #hello {
+#mydiv, .dragContainer {
     position: absolute;
     z-index: 9;
     background-color: #f1f1f1;
     border: 1px solid #d3d3d3;
     text-align: center;
 }
- n
-#mydivheader, #helloheader, .drag {
+
+#mydivheader, .drag {
     padding: 10px;
     cursor: move;
     z-index: 10;

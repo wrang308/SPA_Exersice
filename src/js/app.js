@@ -1,4 +1,5 @@
 console.log('Hello World!')
+var idCounter = 0
 
 // Make the DIV element draggable:
 
@@ -48,9 +49,10 @@ function createWindow () {
   var container = document.getElementById('container')
   var window = document.createElement('div')
   var drag = document.createElement('div')
-  drag.id = 'helloheader'
-  drag.class = drag
-  window.id = 'hello'
+  drag.id = 'id' + idCounter + 'header'
+  drag.classList.add('drag')
+  window.id = 'id' + idCounter
+  window.classList.add('dragContainer')
   drag.innerHTML = 'Hello guys!'
   window.append(drag)
   container.appendChild(window)
@@ -63,5 +65,7 @@ button.addEventListener('click', myFunc)
 function myFunc () {
   dragElement(document.getElementById('mydiv'))
   createWindow()
-  dragElement(document.getElementById('hello'))
+  console.log(idCounter.toString())
+  dragElement(document.getElementById('id' + idCounter.toString()))
+  idCounter++
 }
