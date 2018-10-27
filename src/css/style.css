@@ -1,4 +1,4 @@
-#mydiv, .dragContainer {
+.dragContainer {
     position: absolute;
     z-index: 9;
     background-color: #f1f1f1;
@@ -6,7 +6,7 @@
     text-align: center;
 }
 
-#mydivheader, .drag {
+.drag {
     padding: 10px;
     cursor: move;
     z-index: 10;
@@ -14,8 +14,14 @@
     color: #fff;
 }
 button{
-    margin-bottom: 50px;
-    }
+
+}
+.bottom{
+    position:relative;
+    margin-top: 80vh;
+    left: 50px;
+}
+
 #hello{
     color: rosybrown;
     width: 100px;
@@ -29,4 +35,13 @@ button{
 
 .removed{
     visibility: hidden;
+}
+
+#chatBox{
+    border: 1px black solid;
+    width: 500px;
+    height: 400px;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    overflow: auto;
 }

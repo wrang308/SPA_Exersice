@@ -62,7 +62,38 @@ function createWindow (type) {
     container.appendChild(window)
     setInitialButtons()
   } else if (type === 'chat') {
+    var usernameInputDiv = document.createElement('div')
+    usernameInputDiv.id = 'usernameInputDiv'
+    var usernameInput = document.createElement('input')
+    usernameInput.id = 'usernameInput'
+    usernameInput.type = 'text'
+    usernameInputDiv.appendChild(usernameInput)
+    var sendUserName = document.createElement('button')
+    sendUserName.id = 'sendUserName'
+    sendUserName.innerHTML = 'set username'
+    usernameInputDiv.appendChild(sendUserName)
+    window.appendChild(usernameInputDiv)
+    var chatBoxTitle = document.createElement('div')
+    chatBoxTitle.id = 'chatBoxTitle'
+    window.appendChild(chatBoxTitle)
+    var chatBox = document.createElement('div')
+    chatBox.id = 'chatBox'
+    window.appendChild(chatBox)
+    var chatInput = document.createElement('div')
+    chatInput.id = 'chatInput'
+    var input = document.createElement('input')
+    input.id = 'input'
+    input.type = 'text'
+    chatInput.appendChild(input)
+    var sendMessageDiv = document.createElement('button')
+    sendMessageDiv.id = 'sendMessage'
+    sendMessageDiv.innerHTML = 'Send message'
+    chatInput.appendChild(sendMessageDiv)
+    window.appendChild(chatInput)
     console.log('add chat')
+    container.appendChild(window)
+    sendMessageDiv.addEventListener('click', sendMessage)
+    sendUserName.addEventListener('click', setUsername)
   }
 }
 
@@ -81,7 +112,6 @@ appButton.addEventListener('click', function () {
 })
 
 function myFunc (type) {
-  // dragElement(document.getElementById('mydiv'))
   createWindow(type)
   console.log(idCounter.toString())
   dragElement(document.getElementById('id' + idCounter.toString()))
@@ -223,4 +253,69 @@ function setInitialButtons () {
   container.appendChild(button1)
   container.appendChild(button2)
   container.appendChild(button3)
+}
+
+var sock = new WebSocket('ws://vhost3.lnu.se:20080/socket/')
+var currentDate
+var username
+
+var title = document.getElementById('chatBoxTitle')
+
+
+sock.onopen = function () {
+  console.log('connected')
+}
+sock.onmessage = function (payload) {
+  var obj = JSON.parse(payload.data)
+  if (obj.type === 'message') {
+    var chatContainer = document.getElementById('chatBox')
+    var elem = document.createElement('div')
+    currentDate.getDate() // used for timestamp in the chat
+    var h = addZero(currentDate.getHours())
+    var m = addZero(currentDate.getMinutes())
+    var s = addZero(currentDate.getSeconds())
+    elem.innerHTML = '[' + h + ':' + m + ':' + s + '] ' + obj.username + ': ' + obj.data
+    chatContainer.appendChild(elem)
+    chatContainer.scrollBy(0, chatContainer.scrollHeight)
+    console.log(obj.data)
+  }
+
+  console.log(payload.data)
+}
+
+sock.onclose = function (p1) {
+  console.log('disconnected')
+}
+
+function sendMessage () {
+  var message = '{' +
+    '"type": "message",' +
+    '"data" : "' + document.getElementById('input').value + '" ,' +
+    '"username": "' + username + '",' +
+    '"channel": "my, not so secret, channel",' +
+    '"key": "eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd"' +
+    '}'
+
+  document.getElementById('input').value = ''
+  sock.send(message)
+}
+
+function setUsername () {
+  username = document.getElementById('usernameInput').value
+  document.getElementById('usernameInputDiv').classList.add('removed')
+  document.getElementById('chatBoxTitle').innerHTML = 'Username: ' + username
+}
+
+function updateTime () {
+  setInterval(function () {
+    currentDate = new Date()
+  }, 1000)
+}
+updateTime()
+
+function addZero (i) {
+  if (i < 10) {
+    i = '0' + i
+  }
+  return i
 }
