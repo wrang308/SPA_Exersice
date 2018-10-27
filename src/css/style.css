@@ -14,14 +14,19 @@
     color: #fff;
 }
 button{
-    color: #2196F3;
-    width: 50px;
-    height: 50px;
-    float: right;
-}
+    margin-bottom: 50px;
+    }
 #hello{
     color: rosybrown;
     width: 100px;
     height: 50px;
     background-color: #2196F3;
+}
+
+#memoryContainer img {
+    width: 70px;
+}
+
+.removed{
+    visibility: hidden;
 }
