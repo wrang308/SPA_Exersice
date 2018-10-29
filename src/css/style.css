@@ -1,7 +1,7 @@
 .dragContainer {
     position: absolute;
     z-index: 9;
-    background-color: #f1f1f1;
+    background-color: powderblue;
     border: 1px solid #d3d3d3;
     text-align: center;
 }
@@ -12,6 +12,19 @@
     z-index: 10;
     background-color: #2196F3;
     color: #fff;
+    margin-bottom: 5px;
+}
+.drag button{
+    float: right;
+
+    margin-top: 0;
+    margin-right: 0;
+    padding: 0px;
+}
+.exit{
+    position: absolute;
+    top: 0;
+    right:0;
 }
 button{
 
@@ -36,12 +49,24 @@ button{
 .removed{
     visibility: hidden;
 }
+.displayNone{
+    display: none;
+}
 
 #chatBox{
     border: 1px black solid;
-    width: 500px;
-    height: 400px;
+    text-align: left;
+    background-color: white;
+    width: 300px;
+    height: 250px;
     margin-bottom: 4px;
     margin-top: 4px;
     overflow: auto;
+}
+#chatInput{
+    margin-bottom: 5px;
+}
+
+.focus{
+    z-index: 100;
 }
