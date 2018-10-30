@@ -3,8 +3,9 @@ var idCounter = 0
 var lastFocus
 // Make the DIV element draggable:
 var Memory = require('./modules/memory')
-
 Memory()
+var Chat = require('./modules/chat')
+var chat
 console.log(Memory)
 
 function dragElement (elmnt) {
@@ -90,6 +91,7 @@ function createWindow (type) {
     container.appendChild(window)
     Memory().setInitialButtons()
   } else if (type === 'chat') {
+    chat = Chat()
     drag.innerHTML = 'Chat Box'
     window.appendChild(drag)
     window.appendChild(removeDiv)
@@ -123,8 +125,12 @@ function createWindow (type) {
     window.appendChild(chatInput)
     console.log('add chat')
     container.appendChild(window)
-    sendMessageDiv.addEventListener('click', sendMessage)
-    sendUserName.addEventListener('click', setUsername)
+    sendMessageDiv.addEventListener('click', function () {
+      chat.sendMessage()
+    })
+    sendUserName.addEventListener('click', function () {
+      chat.setUsername()
+    })
   }
 }
 
@@ -148,68 +154,4 @@ function myFunc (type) {
   dragElement(document.getElementById('id' + idCounter.toString()))
 
   idCounter++
-}
-
-var sock = new WebSocket('ws://vhost3.lnu.se:20080/socket/')
-var currentDate
-var username
-
-var title = document.getElementById('chatBoxTitle')
-
-sock.onopen = function () {
-  console.log('connected')
-}
-sock.onmessage = function (payload) {
-  var obj = JSON.parse(payload.data)
-  if (obj.type === 'message') {
-    var chatContainer = document.getElementById('chatBox')
-    var elem = document.createElement('div')
-    currentDate.getDate() // used for timestamp in the chat
-    var h = addZero(currentDate.getHours())
-    var m = addZero(currentDate.getMinutes())
-    var s = addZero(currentDate.getSeconds())
-    elem.innerHTML = '[' + h + ':' + m + ':' + s + '] ' + obj.username + ': ' + obj.data
-    chatContainer.appendChild(elem)
-    chatContainer.scrollBy(0, chatContainer.scrollHeight)
-    console.log(obj.data)
-  }
-
-  console.log(payload.data)
-}
-
-sock.onclose = function (p1) {
-  console.log('disconnected')
-}
-
-function sendMessage () {
-  var message = '{' +
-    '"type": "message",' +
-    '"data" : "' + document.getElementById('input').value + '" ,' +
-    '"username": "' + username + '",' +
-    '"channel": "my, not so secret, channel",' +
-    '"key": "eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd"' +
-    '}'
-
-  document.getElementById('input').value = ''
-  sock.send(message)
-}
-
-function setUsername () {
-  username = document.getElementById('usernameInput').value
-  document.getElementById('usernameInputDiv').classList.add('displayNone')
-  document.getElementById('chatBoxTitle').innerHTML = 'Username: ' + username
-}
-
-function updateTime () {
-  setInterval(function () {
-    currentDate = new Date()
-  }, 1000)
-}
-updateTime()
-
-function addZero (i) {
-  if (i < 10) {
-    i = '0' + i
-  }
-  return i
 }
