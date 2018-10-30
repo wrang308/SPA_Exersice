@@ -6,6 +6,8 @@ var Memory = require('./modules/memory')
 Memory()
 var Chat = require('./modules/chat')
 var chat
+var Clock = require('./modules/clock')
+var clock
 console.log(Memory)
 
 function dragElement (elmnt) {
@@ -131,6 +133,16 @@ function createWindow (type) {
     sendUserName.addEventListener('click', function () {
       chat.setUsername()
     })
+  } else if (type === 'clock') {
+    clock = new Clock()
+    drag.innerHTML = 'Clock'
+    window.appendChild(drag)
+    window.appendChild(removeDiv)
+    var canvas = document.createElement('canvas')
+    canvas.id = 'clock'
+    window.appendChild(canvas)
+    container.appendChild(window)
+    clock.init()
   }
 }
 
