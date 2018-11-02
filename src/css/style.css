@@ -11,6 +11,9 @@ body{
     background-size: cover;
     overflow: hidden;
 }
+h1{
+    color: white;
+}
 .dragContainer {
     position: absolute;
     z-index: 9;
