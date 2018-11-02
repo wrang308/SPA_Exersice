@@ -1,8 +1,21 @@
+body{
+    background-image: url("../image/backgrounds-blank-blue-953214.jpg");
+
+    /* Full height */
+    height: 100vh;
+
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
 .dragContainer {
     position: absolute;
     z-index: 9;
-    background-color: powderblue;
-    border: 1px solid #d3d3d3;
+    background-color: aliceblue;
+    border: 2px solid black;
     text-align: center;
 }
 
@@ -10,9 +23,10 @@
     padding: 10px;
     cursor: move;
     z-index: 10;
-    background-color: #2196F3;
+    background-image: url("../image/abstract-background-carpentry-268976.jpg");
     color: #fff;
     margin-bottom: 5px;
+    border-bottom: 2px solid black;
 }
 .drag button{
     float: right;
@@ -30,9 +44,8 @@ button{
 
 }
 .bottom{
-    position:relative;
-    margin-top: 80vh;
-    left: 50px;
+    position: absolute;
+    bottom: 10px;
 }
 
 #hello{
@@ -42,7 +55,7 @@ button{
     background-color: #2196F3;
 }
 
-#memoryContainer img {
+.memoryContainer a img {
     width: 70px;
 }
 
@@ -53,8 +66,9 @@ button{
     display: none;
 }
 
-#chatBox{
-    border: 1px black solid;
+.chatBox{
+    border-top: 2px black solid;
+    border-bottom: 2px black solid;
     text-align: left;
     background-color: white;
     width: 300px;
@@ -63,10 +77,44 @@ button{
     margin-top: 4px;
     overflow: auto;
 }
-#chatInput{
+.chatInput{
     margin-bottom: 5px;
 }
 
 .focus{
     z-index: 100;
+}
+canvas{
+    background-color: white;
+
+}
+#addMemory{
+    background-image: url("../image/baseline-videogame_asset-24px.svg");
+    height: 100px;
+    width: 100px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+
+}
+#addChat{
+    background-image: url("../image/baseline-forum-24px.svg");
+    height: 100px;
+    width: 100px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    left: 120px;
+}
+#addApp{
+    background-image: url("../image/baseline-access_time-24px.svg");
+    height: 100px;
+    width: 100px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    left: 230px;
 }

@@ -1,9 +1,11 @@
 console.log('Hello World!')
 var idCounter = 0
 var lastFocus
+var memoryIdCounter = 0
+var chatIdCounter = 0
+var clockIdCounter = 0
 // Make the DIV element draggable:
 var Memory = require('./modules/memory')
-Memory()
 var Chat = require('./modules/chat')
 var chat
 var Clock = require('./modules/clock')
@@ -85,64 +87,60 @@ function createWindow (type) {
   window.classList.add('dragContainer')
   if (type === 'mem') {
     drag.innerHTML = 'Memory Game'
+    window.style = 'width: 280px; height: 375px'
     window.appendChild(drag)
     window.appendChild(removeDiv)
     var mem = document.createElement('div')
-    mem.id = 'memoryContainer'
+    mem.id = 'memoryContainer' + memoryIdCounter
+    mem.classList = 'memoryContainer'
     window.appendChild(mem)
     container.appendChild(window)
-    Memory().setInitialButtons()
+    Memory().setInitialButtons(memoryIdCounter)
+    memoryIdCounter++
   } else if (type === 'chat') {
-    chat = Chat()
+    chat = new Chat(chatIdCounter)
     drag.innerHTML = 'Chat Box'
     window.appendChild(drag)
     window.appendChild(removeDiv)
     var usernameInputDiv = document.createElement('div')
-    usernameInputDiv.id = 'usernameInputDiv'
+    usernameInputDiv.id = 'usernameInputDiv' + chatIdCounter
     var usernameInput = document.createElement('input')
-    usernameInput.id = 'usernameInput'
+    usernameInput.id = 'usernameInput' + chatIdCounter
     usernameInput.type = 'text'
     usernameInputDiv.appendChild(usernameInput)
-    var sendUserName = document.createElement('button')
-    sendUserName.id = 'sendUserName'
-    sendUserName.innerHTML = 'set username'
-    usernameInputDiv.appendChild(sendUserName)
+
+
     window.appendChild(usernameInputDiv)
     var chatBoxTitle = document.createElement('div')
-    chatBoxTitle.id = 'chatBoxTitle'
+    chatBoxTitle.id = 'chatBoxTitle' + chatIdCounter
     window.appendChild(chatBoxTitle)
     var chatBox = document.createElement('div')
-    chatBox.id = 'chatBox'
+    chatBox.id = 'chatBox' + chatIdCounter
+    chatBox.classList = 'chatBox'
     window.appendChild(chatBox)
     var chatInput = document.createElement('div')
-    chatInput.id = 'chatInput'
+    chatInput.id = 'chatInput' + chatIdCounter
+    chatInput.classList = 'chatInput'
     var input = document.createElement('input')
-    input.id = 'input'
-    input.type = 'text'
+    input.id = 'input' + chatIdCounter
+    input.type = 'text' + chatIdCounter
     chatInput.appendChild(input)
-    var sendMessageDiv = document.createElement('button')
-    sendMessageDiv.id = 'sendMessage'
-    sendMessageDiv.innerHTML = 'Send message'
-    chatInput.appendChild(sendMessageDiv)
     window.appendChild(chatInput)
     console.log('add chat')
     container.appendChild(window)
-    sendMessageDiv.addEventListener('click', function () {
-      chat.sendMessage()
-    })
-    sendUserName.addEventListener('click', function () {
-      chat.setUsername()
-    })
+    chat.initButtons(chatIdCounter)
+    chatIdCounter++
   } else if (type === 'clock') {
     clock = new Clock()
     drag.innerHTML = 'Clock'
     window.appendChild(drag)
     window.appendChild(removeDiv)
     var canvas = document.createElement('canvas')
-    canvas.id = 'clock'
+    canvas.id = 'clock' + clockIdCounter
     window.appendChild(canvas)
     container.appendChild(window)
-    clock.init()
+    clock.init(clockIdCounter)
+    clockIdCounter++
   }
 }
 
